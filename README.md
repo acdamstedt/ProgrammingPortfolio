@@ -1,9 +1,8 @@
 # ProgrammingPortfolio
-
+This respository sets up a website for the programming portfolio, the link to which can be found in the about section. 
 [UNDER CONSTRUCTION]
 
 TODO:
-- set up website template
 - placeholder c++ game
 - placeholder godot game
 - placeholder java app
