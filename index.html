@@ -152,24 +152,50 @@
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
     const closeBtn = document.querySelector(".close");
-
-    document.querySelectorAll(".clickable-img").forEach(img => {
-      img.addEventListener("click", () => {
-        lightbox.style.display = "block";
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-      });
+  
+    const images = Array.from(document.querySelectorAll(".clickable-img"));
+    let currentIndex = -1;
+  
+    function showImage(index) {
+      if (index < 0 || index >= images.length) return;
+      currentIndex = index;
+      lightboxImg.src = images[index].src;
+      lightboxImg.alt = images[index].alt;
+      lightbox.style.display = "block";
+    }
+  
+    images.forEach((img, i) => {
+      img.addEventListener("click", () => showImage(i));
     });
   
     closeBtn.onclick = () => {
       lightbox.style.display = "none";
+      currentIndex = -1;
     };
   
     window.onclick = (event) => {
       if (event.target === lightbox) {
         lightbox.style.display = "none";
+        currentIndex = -1;
       }
     };
+  
+    document.addEventListener("keydown", (event) => {
+      if (lightbox.style.display !== "block") return;
+  
+      if (event.key === "Escape") {
+        lightbox.style.display = "none";
+        currentIndex = -1;
+      } else if (event.key === "ArrowRight") {
+        if (currentIndex < images.length - 1) {
+          showImage(currentIndex + 1);
+        }
+      } else if (event.key === "ArrowLeft") {
+        if (currentIndex > 0) {
+          showImage(currentIndex - 1);
+        }
+      }
+    });
   </script>
   
 </body>
